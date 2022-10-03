@@ -1,0 +1,31 @@
+<mat-toolbar>
+  <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon" mat-button (click)="drawer.toggle()">
+   <mat-icon>menu</mat-icon>
+ </button>
+ <span>My App</span>
+ <span class="example-spacer"></span>
+ <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+   <mat-icon>favorite</mat-icon>
+ </button>
+ <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+  <mat-icon>share</mat-icon>
+</button>
+</mat-toolbar>
+
+<div class="sidemenu">
+  <mat-sidenav-container>
+      <mat-sidenav #drawer mode="side" opened>
+          <mat-nav-list>
+              <mat-list-item [routerLink]="['page1']"><mat-icon mat-list-icon>dashboard</mat-icon> Menu 1</mat-list-item>
+              <mat-list-item [routerLink]="['page2']"><mat-icon mat-list-icon>person</mat-icon> Menu 2</mat-list-item>
+              <mat-list-item [routerLink]="['contoh']"><mat-icon mat-list-icon>person</mat-icon> Card</mat-list-item>
+              <mat-list-item [routerLink]="['contoh/table']"><mat-icon mat-list-icon>person</mat-icon> Table</mat-list-item>
+          </mat-nav-list>
+      </mat-sidenav>
+      <mat-sidenav-content>
+          <router-outlet></router-outlet>
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+
+
+</div>
