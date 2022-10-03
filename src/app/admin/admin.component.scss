@@ -1,0 +1,17 @@
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+.sidemenu {
+  display: flex;
+  height: 100%;
+}
+
+mat-sidenav-container {
+  width: 100%;
+}
+
+mat-sidenav {
+  width: 300px;
+  color: black;
+}
