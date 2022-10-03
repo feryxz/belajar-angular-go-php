@@ -1,2 +1,0 @@
-Array
-{"success":true,"msg":"Sukses Send","param":{"nama":"Feryxz Developer","email":"feryxz.dev@gmail.com","subject":"Login Notification","pesan":"<b>Meliodas<\/b>"}}
