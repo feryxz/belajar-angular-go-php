@@ -15,15 +15,10 @@ func init() {
 }
 
 func main() {
-	fmt.Println("GO Stokhub ...")
+	fmt.Println("GO Feryxz ...")
 	r := gin.Default()
 	r.Use(middleware.CORSMiddleware())
 	routes.RouterController(r)
-	if config.GetMode() == "prod" {
-		r.Run(config.GetPort())
-	} else if config.GetMode() == "test" {
-		r.Run(config.GetPort())
-	} else {
-		r.Run()
-	}
+
+	r.Run(config.GetPort())
 }
