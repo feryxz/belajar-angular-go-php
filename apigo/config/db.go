@@ -13,15 +13,15 @@ func DB() DBSetting {
 	var setting DBSetting
 	if GetMode() == "prod" {
 		setting.Host = "localhost"
-		setting.Username = "prosini"
-		setting.Password = "admin@prosini123"
+		setting.Username = "test"
+		setting.Password = "uwu"
 		setting.Database = "stokhub"
 		setting.Port = "3306"
 		setting.Charset = "utf8"
 	} else if GetMode() == "test" {
 		setting.Host = "localhost"
-		setting.Username = "prosini"
-		setting.Password = "admin@prosini123"
+		setting.Username = "test"
+		setting.Password = "uwu"
 		setting.Database = "stokhub_2"
 		setting.Port = "3306"
 		setting.Charset = "utf8"
