@@ -1,0 +1,70 @@
+<div class="dialog-content">
+
+    <div class="input-component">
+        <label>Nama<span class="input-required">*</span></label>
+        <div>
+            <input type="text" pInputText [formControl]="Form.controls['personalia']" class="w-full">
+        </div>
+    </div>
+
+    <div class="input-component">
+        <label>NIP<span class="input-required">*</span></label>
+        <div>
+            <input type="text" pInputText [formControl]="Form.controls['nip']" class="w-full">
+        </div>
+    </div>
+
+    <div class="input-component">
+        <label>Jenis Kelamin<span class="input-required">*</span></label>
+        <div>
+            <p-dropdown [options]="listJenkel" optionValue="value" optionLabel="name"
+                [formControl]="Form.controls['jenkel']" styleClass="w-full"></p-dropdown>
+        </div>
+    </div>
+
+    <div class="input-component">
+        <label>No HP<span class="input-required">*</span></label>
+        <div>
+            <input type="tel" pInputText [formControl]="Form.controls['hp']" class="w-full">
+        </div>
+    </div>
+
+    <div class="input-component">
+        <label>Email<span class="input-required">*</span></label>
+        <div>
+            <input type="text" pInputText [formControl]="Form.controls['email']" class="w-full">
+        </div>
+    </div>
+
+    <div class="input-component">
+        <label>Struktur Organisasi<span class="input-required">*</span></label>
+        <div>
+            <p-dropdown [options]="listStruktur" optionValue="idstruktur" optionLabel="struktur"
+                [formControl]="Form.controls['idstruktur']" styleClass="w-full"></p-dropdown>
+        </div>
+    </div>
+
+    <div class="input-component">
+        <label>Tipe Akun<span class="input-required">*</span></label>
+        <div>
+            <p-dropdown [options]="listTipe" optionValue="value" optionLabel="name"
+                [formControl]="Form.controls['tipe']" styleClass="w-full"></p-dropdown>
+        </div>
+    </div>
+
+    <div class="input-component">
+        <label>Password<span class="input-required">*</span></label>
+        <div>
+            <input type="password" pInputText [formControl]="Form.controls['password']" class="w-full">
+        </div>
+    </div>
+
+</div>
+
+<div class="dialog-footer">
+    <p-button label="Batal" styleClass="p-button-danger p-button-text" (click)="onClose()"></p-button>
+
+    <!-- <button pButton type="button" [loading]="loading" [disabled]="!Form.valid" label="Simpan" (click)="onSave()" styleClass="btn-myprimary"></button> -->
+    <p-button [loading]="loading" label="Simpan" [disabled]="!Form.valid" (onClick)="onSave()"
+        styleClass="btn-myprimary"></p-button>
+</div>

@@ -8,6 +8,6 @@ import (
 
 func RouterController(router *gin.Engine) {
 
-	//dashboard
+	//Contoh
 	test.TestRoute(router)
 }

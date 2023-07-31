@@ -2,7 +2,10 @@ module apigo
 
 go 1.18
 
-require gorm.io/gorm v1.23.10
+require (
+	github.com/joho/godotenv v1.5.1
+	gorm.io/gorm v1.23.10
+)
 
 require (
 	github.com/gin-contrib/sse v0.1.0 // indirect

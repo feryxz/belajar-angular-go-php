@@ -1,9 +1,32 @@
-html,
-body {
-  height: 100%;
+@import "primeicons/primeicons.css";
+@import '/src/assets/style/layout.scss';
+@import '/src/assets/style/card.scss';
+@import '/src/assets/style/button.scss';
+
+::ng-deep .p-scrollpanel {
+
+  &.custombar1 {
+    .p-scrollpanel-wrapper {
+      border-right: 9px solid var(--layer-1);
+    }
+
+    .p-scrollpanel-bar {
+      background-color: #1A3C75;
+      opacity: 1;
+      transition: background-color .2s;
+
+      &:hover {
+        background-color: #007ad9;
+      }
+    }
+  }
 }
 
-body {
-  margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+::ng-deep.swal2-container {
+  z-index: 1000000;
 }
+
+@import '/src/assets/style/input.scss';
+@import '/src/assets/style/table.scss';
+@import '/src/assets/style/dialog.scss';
+@import '/src/assets/style/custom.scss';

@@ -1,0 +1,97 @@
+<h1>Data Personalia</h1>
+
+<p-card class="card-content">
+
+    <div class="table-action">
+        <p-button label="Tambah" icon="pi pi-user-plus" styleClass="btn-myprimary"
+            (onClick)="onOpenAddDialog()"></p-button>
+
+        <div class="p-inputgroup w-10rem table-search">
+            <input type="text" pInputText placeholder="Cari" class="p-inputtext-sm" />
+            <button type="button" pButton icon="pi pi-search" class="btn-myprimary"></button>
+        </div>
+
+        <p-toggleButton [(ngModel)]="isFilter" onIcon="pi pi-filter-slash" offIcon="pi pi-filter"
+            class="filter-toggle"></p-toggleButton>
+
+        <div class="filter" *ngIf="isFilter">
+            <p-dropdown [options]="filterList" placeholder="Pilih Item" class="p-inputtext-sm"></p-dropdown>
+            <p-dropdown [options]="filterList" placeholder="Pilih Item" class="p-inputtext-sm"></p-dropdown>
+            <p-dropdown [options]="filterList" placeholder="Pilih Item" class="p-inputtext-sm"></p-dropdown>
+        </div>
+    </div>
+    <br>
+    <br>
+    <p-table [value]="dataList" styleClass="p-datatable-gridlines p-datatable-sm table-grid-myprimary">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>NO</th>
+                <th>AKSI</th>
+                <th>NAMA</th>
+                <th>NIP</th>
+                <th>STRUKTUR</th>
+                <th>JABATAN</th>
+                <th>HP</th>
+                <th>EMAIL</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-data let-rowIndex="rowIndex">
+            <tr>
+                <td>{{rowIndex+1}}</td>
+                <td>
+                    <p-button icon="pi pi-folder-open" pTooltip="Detail" [routerLink]="['../detail',1]"
+                        styleClass="p-button-rounded p-button-text"></p-button>
+                    <p-button icon="pi pi-list" pTooltip="Detail Foto" styleClass="p-button-rounded p-button-text"
+                        (click)="onFotoDialog()"></p-button>
+                    <p-button icon="pi pi-trash" pTooltip="Hapus Data"
+                        styleClass="p-button-rounded p-button-text p-button-danger"
+                        (click)="onConfirm(data)"></p-button>
+                    <p-button icon="pi pi-bell" pTooltip="Alert Data" styleClass="p-button-rounded p-button-text"
+                        (click)="onAlertInfo()"></p-button>
+                </td>
+                <td>{{ data.personalia }}</td>
+                <td>{{ data.nip }}</td>
+                <td>{{ data.struktur }}</td>
+                <td>Staff</td>
+                <td>{{ data.hp }}</td>
+                <td>{{ data.email }}</td>
+            </tr>
+        </ng-template>
+    </p-table>
+
+    <p-paginator [rows]="rows" [showCurrentPageReport]="true"
+        currentPageReportTemplate="Menampilkan {first} - {last} dari {{length}} data" [totalRecords]="length"
+        [rowsPerPageOptions]="[20,50,100,200]" (onPageChange)="onPageChange($event)"></p-paginator>
+</p-card>
+
+<p-confirmDialog header="Konfirmasi" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+<p-toast position="top-right" [preventDuplicates]="false" sticky="true"></p-toast>
+<p-dialog header="Header" [(visible)]="visible_confirm" [style]="{ width: '400px' }">
+    <ng-template pTemplate="header">
+        <span class="text-xl font-bold">Informasi Dialog</span>
+    </ng-template>
+    <div style="margin-left: auto; margin-right: auto;text-align: center;">
+        <i class="pi pi-info-circle" style="font-size: 75px;margin-left: auto; margin-right: auto;"></i>
+    </div>
+    <p style="text-align: center;">
+        Terjadi error pada server
+    </p>
+    <ng-template pTemplate="footer" style="margin-left: auto; margin-right: auto;">
+        <p-button label="OK" styleClass="btn-myprimary" (onClick)="visible_confirm = false"></p-button>
+    </ng-template>
+</p-dialog>
+<p-dialog header="Header" [(visible)]="visible_detail" [style]="{ width: '50vw' }" [maximizable]="true">
+    <ng-template pTemplate="header">
+        <span class="text-xl font-bold">Detail</span>
+    </ng-template>
+    <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+        magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+        pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
+        laborum.
+    </p>
+    <!-- <ng-template pTemplate="footer" style="margin-left: auto; margin-right: auto;">
+        <p-button label="OK" styleClass="btn-myprimary" (onClick)="visible_detail = false"></p-button>
+    </ng-template> -->
+</p-dialog>

@@ -1,0 +1,34 @@
+.table-action {
+    margin-bottom: 10px;
+
+    .table-search {
+        float: right;
+    }
+
+    .filter-toggle {
+        float: right;
+        margin-right: 10px;
+    }   
+
+    .filter {
+        margin-top: 10px;
+        padding: 5px;
+        background-color: #FAFAFA;
+
+        p-dropdown {
+            margin-right: 10px;
+        }
+    }
+}
+
+.table-grid-myprimary {
+    th {
+        font-size: 90%;
+        background-color: $color-myprimary-background !important;
+        color: $color-myprimary-text !important;
+    }
+
+    td {
+        font-size: 90%;
+    }
+}

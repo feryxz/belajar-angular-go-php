@@ -1,0 +1,122 @@
+<h1>Form</h1>
+
+<p-card header="Form Input">
+    <!-- You learn how to use form this <a href="http://primefaces.org/primeng/floatlabel" target="_blank">link</a> -->
+
+    <div>
+        <div class="input-component">
+            <label>Nama<span class="input-required">*</span></label>
+            <div>
+                <input type="text" pInputText [formControl]="Form.controls['nama']" class="w-full">
+            </div>
+        </div>
+
+        <div class="input-component">
+            <label>No HP<span class="input-required">*</span></label>
+            <div>
+                <input type="tel" pInputText [formControl]="Form.controls['hp']" class="w-full">
+            </div>
+        </div>
+
+        <div class="input-component">
+            <label>Jenis Kelamin<span class="input-required">*</span></label>
+            <div>
+                <p-dropdown [options]="jenkelList" optionValue="value" optionLabel="label"
+                    [formControl]="Form.controls['jenkel']" styleClass="w-full"></p-dropdown>
+            </div>
+        </div>
+
+        <div class="input-component">
+            <label>Negara<span class="input-required">*</span></label>
+            <div>
+                <p-dropdown [options]="listNegara" [formControl]="Form.controls['negara']" [filter]="true"
+                    filterBy="name" optionLabel="name" optionValue="value" appendTo="body" [style]="{'width':'100%'}">
+                    <ng-template let-data pTemplate="item">
+                        <div>{{data.name}}</div>
+                    </ng-template>
+                </p-dropdown>
+            </div>
+        </div>
+
+        <div class="input-component">
+            <p-checkbox value="1" [formControl]="Form.controls['aktif']"></p-checkbox>
+            <label>Status aktif</label>
+        </div>
+
+        <div class="input-component">
+            <label>Keterangan</label>
+            <div>
+                <textarea [rows]="3" pInputTextarea [formControl]="Form.controls['keterangan']" [autoResize]="true"
+                    class="w-full"></textarea>
+            </div>
+        </div>
+
+        <div class="input-component">
+            <label>Tanggal Lahir</label>
+            <div>
+                <p-calendar [formControl]="Form.controls['tanggal']" dateFormat="yy/mm/dd" [showIcon]="true"
+                    styleClass="w-full"></p-calendar>
+            </div>
+        </div>
+
+        <p-button [loading]="loading" label="Simpan" [disabled]="!Form.valid" (onClick)="onSave()"
+            styleClass="btn-myprimary"></p-button>
+    </div>
+</p-card>
+
+<p-card header="File Input" [style]="{'margin-top':'20px'}">
+    <!-- You learn how to use form this <a href="http://primefaces.org/primeng/floatlabel" target="_blank">link</a> -->
+
+    <div>
+        <div class="input-component">
+            <label>Informasi</label>
+            <div>
+                <input type="text" pInputText [formControl]="Form.controls['informasi']" class="w-full">
+            </div>
+        </div>
+
+        <div class="input-component">
+            <div class="input-image" (click)="imgInput.click()" (dragover)="onImgDragOver($event)"
+                (drop)="onImgDropped($event)">
+                <img [src]="img_file">
+                <div class="input-image-browse">
+                    <span>Drag & Drop atau Pilih</span>
+                    <input #imgInput type="file" accept="image/*" (change)="onImgHandled($any($event))">
+                </div>
+            </div>
+        </div>
+
+        <div class="input-component">
+            <div class="input-file" (click)="fileInput.click()" (dragover)="onFileDragOver($event)"
+                (drop)="onFileDropped($event)">
+                <div class="input-file-preview">
+                    <span>{{any_file_name}}</span>
+                </div>
+                <div class="input-file-browse">
+                    <span>Drag & Drop atau Pilih</span>
+                    <input #fileInput type="file" accept="application/pdf" (change)="onFileHandled($any($event))">
+                </div>
+            </div>
+        </div>
+
+        <p-progressBar mode="determinate" [value]="uploadProgressPercent" *ngIf="loading"></p-progressBar>
+        <p-button [loading]="loading" label="Simpan" (onClick)="onSaveFile()" styleClass="btn-myprimary"></p-button>
+    </div>
+</p-card>
+
+<p-toast position="top-right" [preventDuplicates]="false" sticky="true"></p-toast>
+
+<p-dialog header="Header" [(visible)]="visible_confirm" [style]="{ width: '400px' }">
+    <ng-template pTemplate="header">
+        <span class="text-xl font-bold">Informasi Dialog</span>
+    </ng-template>
+    <div style="margin-left: auto; margin-right: auto;text-align: center;">
+        <i class="pi pi-info-circle" style="font-size: 75px;margin-left: auto; margin-right: auto;"></i>
+    </div>
+    <p style="text-align: center;">
+        {{consfirm_message}}
+    </p>
+    <ng-template pTemplate="footer" style="margin-left: auto; margin-right: auto;">
+        <p-button label="OK" styleClass="btn-myprimary" (onClick)="visible_confirm = false"></p-button>
+    </ng-template>
+</p-dialog>

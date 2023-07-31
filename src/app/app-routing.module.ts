@@ -1,25 +1,30 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AdminComponent } from './admin/admin.component';
 import { Page1Component } from './page1/page1.component';
 import { Page2Component } from './page2/page2.component';
+import { LayoutComponent } from './admin/layout/layout.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 const routes: Routes = [
   {
-    path      : '',
-    component : AdminComponent,
-    children  : [
+    path: '',
+    component: LayoutComponent,
+    children: [
       {
-        path          : 'page1',
-        component     : Page1Component
+        path: '',
+        component: DashboardComponent,
       },
       {
-        path          : 'page2',
-        component     : Page2Component
-      },{
-        path          : 'contoh',
-        loadChildren  : () => import('./contoh/contoh.module').then(m => m.ContohModule)
-      }
+        path: 'page2',
+        component: Page2Component
+      }, {
+        path: 'contoh',
+        loadChildren: () => import('./contoh/contoh.module').then(m => m.ContohModule)
+      },
+      {
+        path: 'component',
+        loadChildren: () => import('./components/components.module').then(m => m.ComponentsModule)
+      },
     ]
   },
 ]

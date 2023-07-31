@@ -1,0 +1,107 @@
+<div style="display: flex; align-items: center; margin: 10px;">
+    <div style="width: 100%;">
+        <h2 class="m-0">Tambah Data</h2>
+    </div>
+    <div>
+        <button pButton class="p-button-text close-btn" type="button" icon="pi pi-times" iconPos="left"
+            (click)="onClose()"></button>
+    </div>
+</div>
+
+<p-scrollPanel [style]="{width: '100%', height: '400px'}" styleClass="custombar1">
+    <div style="margin-bottom: 20px;">
+        <div>
+            <span>Nama <span style="color: red;">*</span></span>
+        </div>
+        <span class="w-full">
+            <input class="w-full" type="text" pInputText [formControl]="Form.controls['personalia']">
+        </span>
+    </div>
+
+    <div style="margin-bottom: 20px;">
+        <div>
+            <span>NIP <span style="color: red;">*</span></span>
+        </div>
+        <span>
+            <input class="w-full" type="text" pInputText [formControl]="Form.controls['nip']">
+        </span>
+    </div>
+
+    <div style="margin-bottom: 20px;">
+        <div>
+            <span>Jenis Kelamin</span>
+        </div>
+        <span>
+            <p-dropdown optionValue="value" [options]="listJenkel" optionLabel="name"
+                [formControl]="Form.controls['jenkel']" [style]="{'width':'100%'}"></p-dropdown>
+        </span>
+    </div>
+
+    <div style="margin-bottom: 20px;">
+        <div>
+            <span>No HP <span style="color: red;">*</span></span>
+        </div>
+        <span>
+            <input class="w-full" type="tel" pInputText [formControl]="Form.controls['hp']">
+        </span>
+    </div>
+
+    <div style="margin-bottom: 20px;">
+        <div>
+            <span>Email <span style="color: red;">*</span></span>
+        </div>
+        <span>
+            <input class="w-full" type="tel" pInputText [formControl]="Form.controls['email']">
+        </span>
+    </div>
+
+    <div style="margin-bottom: 20px;">
+        <div>
+            <span>Struktur <span style="color: red;">*</span></span>
+        </div>
+        <span>
+            <p-dropdown optionValue="idstruktur" [options]="listStruktur" optionLabel="struktur"
+                [formControl]="Form.controls['idstruktur']" [style]="{'width':'100%'}"></p-dropdown>
+        </span>
+    </div>
+
+    <div style="margin-bottom: 20px;">
+        <div>
+            <span>Password <span style="color: red;">*</span></span>
+        </div>
+        <span>
+            <input class="w-full" type="password" pInputText [formControl]="Form.controls['password']">
+        </span>
+    </div>
+
+    <div style="margin-bottom: 20px;">
+        <div>
+            <span>Tipe Login <span style="color: red;">*</span></span>
+        </div>
+        <span>
+            <p-dropdown optionValue="value" [options]="listTipe" optionLabel="name"
+                [formControl]="Form.controls['tipe']" [style]="{'width':'100%'}"></p-dropdown>
+        </span>
+    </div>
+    <div style="margin-bottom: 20px;">
+        <div>
+            <span>Status Akun <span style="color: red;">*</span></span>
+        </div>
+        <span>
+            <p-dropdown optionValue="value" [options]="listAktif" optionLabel="name"
+                [formControl]="Form.controls['akun_aktif']" [style]="{'width':'100%'}"></p-dropdown>
+        </span>
+    </div>
+    <div>
+        <p style="color:black"><span style="color: red;">*</span> Form harus diisi</p>
+    </div>
+    <br>
+</p-scrollPanel>
+
+<div class="text-right pt-1 pb-0 mb-0">
+    <button pButton type="button" label="Batal" class="p-button-text" style="color: black;"
+        (click)="onClose()"></button>
+    &nbsp;
+    <button pButton type="button" [disabled]="!Form.valid" label="Simpan" (click)="onSave()"
+        style="background-color: #1A3C75; border-color: #1A3C75;"></button>
+</div>

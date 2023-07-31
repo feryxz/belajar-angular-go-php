@@ -1,0 +1,64 @@
+<h1>Profil Personalia</h1>
+
+<p-card class="card-content">
+    <h2>Nama : Fulan</h2>
+    <p-tabView>
+        <p-tabPanel header="Profil">
+            <div class="profil">
+                <div class="flex flex-column myinput">
+                    <label>Nama</label>
+                    <input pInputText class="p-inputtext-sm"/>
+                </div>
+
+                <div class="flex flex-column myinput">
+                    <label>NIP</label>
+                    <input pInputText [(ngModel)]="idpersonalia" class="p-inputtext-sm" />
+                </div>
+
+                <div class="flex flex-column myinput">
+                    <label>Jenis Kelamin</label>
+                    <p-dropdown [options]="" placeholder="Pilih" optionLabel="name" class="p-inputtext-sm"></p-dropdown>
+                </div>
+
+                <div class="flex flex-column myinput">
+                    <label>HP</label>
+                    <input pInputText class="p-inputtext-sm" />
+                </div>
+
+                <div class="flex flex-column myinput">
+                    <label>Email</label>
+                    <input pInputText class="p-inputtext-sm" />
+                </div>
+
+                <div class="flex flex-column myinput">
+                    <label>Alamat</label>
+                    <textarea rows="2" pInputTextarea></textarea>
+
+                </div>
+
+                <p-button label="Simpan" icon="pi pi-save" styleClass="p-button-raised p-button-success" ></p-button>
+
+            </div>
+            
+        </p-tabPanel>
+
+
+        <p-tabPanel header="Akun">
+            <div class="akun">
+                <app-personalia-detail-akun [idpersonalia_akun]="idpersonalia"></app-personalia-detail-akun>
+            </div>
+        </p-tabPanel>
+
+        <p-tabPanel header="Dokumen">
+            <div class="dokumen">
+                <app-personalia-detail-dokumen [idpersonalia_dokumen]="idpersonalia"></app-personalia-detail-dokumen>
+            </div>
+        </p-tabPanel>       
+
+        <p-tabPanel header="Log Aktivitas">
+            <div class="log">
+                <app-personalia-detail-log [idpersonalia]="idpersonalia"></app-personalia-detail-log>
+            </div>    
+        </p-tabPanel>
+    </p-tabView>
+</p-card>

@@ -1,0 +1,68 @@
+.input-component {
+    margin-bottom: 20px;
+
+    label {
+        font-size: 85%;
+        color: #888888;
+        margin-left: 3px;
+    }
+
+    .input-required {
+        color: red;
+    }
+}
+
+.input-image {
+    border: dotted 1px #999999;
+    max-width: 162px;
+    text-align: center;
+
+    img {
+        max-width: 150px;
+        max-height: 150px;
+    }
+
+    .input-image-browse {
+        padding: 20px 5px 0px 5px;
+        background-color: #EEEEEE;
+        font-size: 85%;
+
+        input {
+            visibility: hidden;
+            display: block;
+        }
+    }   
+    
+}
+
+.input-image:hover{
+    cursor: pointer;
+}
+
+.input-file {
+    border: dotted 1px #999999;
+    min-width: 200px;
+    
+
+    img {
+        max-width: 150px;
+        max-height: 150px;
+    }
+
+    .input-file-browse {
+        padding: 20px 5px 0px 5px;
+        background-color: #EEEEEE;
+        font-size: 85%;
+        text-align: center;
+
+        input {
+            visibility: hidden;
+            display: block;
+        }
+    }   
+    
+}
+
+.input-file:hover{
+    cursor: pointer;
+}

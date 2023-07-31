@@ -1,0 +1,66 @@
+//=============== COLOR VARIABLE ============
+$color-myprimary-background : #4CAF50;
+$color-myprimary-text : #FFFFFF;
+$color-myprimary-border : #4CAF50;
+
+$color-mysecondary-background : #66BB6A;
+$color-mysecondary-text : #66BB6A;
+$color-mysecondary-border : #4CAF50;
+
+
+.btn-myprimary {
+    font-size: 100%;
+    padding: 8px 15px;
+    border: 1px solid  $color-myprimary-border;
+    border-radius: 5px;
+    background-color: $color-myprimary-background;
+    color: $color-myprimary-text;
+}
+
+.btn-myprimary:hover{
+    opacity: 0.9;
+    cursor: pointer;
+}
+
+.btn-myprimary:active{
+    opacity: 1;
+}
+
+p-button {
+    .btn-myprimary {
+        background-color: $color-myprimary-background;
+        border-color: $color-myprimary-border;
+        color: $color-myprimary-text;
+    }
+
+    .btn-myprimary:hover {
+        background-color: $color-myprimary-background!important;
+        border-color: $color-myprimary-border!important;
+        color: $color-myprimary-text;
+        opacity: 0.9;
+    }
+
+    .btn-myprimary:focus {
+        box-shadow: none;
+    }
+}
+
+.p-inputgroup {
+    .btn-myprimary {
+        background-color: $color-myprimary-background;
+        border-color: $color-myprimary-border;
+        color: $color-myprimary-text;
+    }
+
+    .btn-myprimary:hover {
+        background-color: $color-myprimary-background!important;
+        border-color: $color-myprimary-border!important;
+        color: $color-myprimary-text;
+        opacity: 0.9;
+    }
+
+    .btn-myprimary:focus {
+        box-shadow: none;
+    }
+}
+
