@@ -19,6 +19,11 @@ export class SidemenuComponent implements OnInit {
         icon: 'pi-microsoft',
         link: 'dasboard'
       },
+      {
+        label: 'Product',
+        icon: 'pi-list',
+        link: 'dasboard'
+      },
       //=================================
       {
         label: 'Component',
