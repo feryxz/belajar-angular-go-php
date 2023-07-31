@@ -22,7 +22,7 @@ export class SidemenuComponent implements OnInit {
       {
         label: 'Product',
         icon: 'pi-list',
-        link: 'dasboard'
+        link: 'product'
       },
       //=================================
       {
