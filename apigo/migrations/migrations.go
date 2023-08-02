@@ -58,7 +58,7 @@ func DBCore() (*gorm.DB, error) {
 
 	fmt.Println("database connect")
 
-	db.AutoMigrate(&models.Product{}, models.User{})
+	db.AutoMigrate(&models.Product{}, models.User{}, models.Auth{})
 
 	fmt.Println("Migrations success!")
 
