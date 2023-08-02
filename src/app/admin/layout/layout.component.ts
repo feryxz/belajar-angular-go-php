@@ -70,8 +70,9 @@ export class LayoutComponent implements OnInit {
   }
 
   onSignOut(){
-    // alert('Logout')
-    this.router.navigate(['/login'])
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('refresh_token');
+    this.router.navigate(['/login']);
   }
 
 }

@@ -6,7 +6,6 @@ import { ConfirmEventType, ConfirmationService, MessageService } from 'primeng/a
 import { environment } from 'src/environments/environment';
 // import { MainService } from 'src/app/services/main.service';
 import { Paginator } from 'primeng/paginator';
-import { Product } from 'src/app/interface/product.interface';
 import { PersonaliaEditModalComponent } from './personalia-edit-modal/personalia-edit-modal.component';
 
 @Component({

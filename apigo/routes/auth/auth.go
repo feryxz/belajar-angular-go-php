@@ -2,7 +2,6 @@ package auth
 
 import (
 	"apigo/models"
-	"fmt"
 	"os"
 	"time"
 
@@ -70,7 +69,7 @@ func AuthRoute(router *gin.Engine) {
 			accessToken, err := token.SignedString([]byte(os.Getenv("ACCESS_TOKEN_KEY")))
 			if err != nil {
 				context.JSON(500, gin.H{
-					"message": "failed to created token",
+					"msg": "gagal generate token",
 				})
 				return
 			}
@@ -83,7 +82,7 @@ func AuthRoute(router *gin.Engine) {
 			refreshToken, err := token.SignedString([]byte(os.Getenv("REFRESH_TOKEN_KEY")))
 			if err != nil {
 				context.JSON(500, gin.H{
-					"message": "failed to created token",
+					"msg": "gagal membuat token",
 				})
 				return
 			}
@@ -98,21 +97,21 @@ func AuthRoute(router *gin.Engine) {
 				if compare == nil {
 					if dbinsert.Error == nil {
 						callback["success"] = true
-						callback["msg"] = "login succes"
+						callback["msg"] = "login sukses"
 						callback["access_token"] = accessToken
 						callback["refresh_token"] = refreshToken
 						callback["user"] = token.Claims
 					} else {
 						callback["success"] = false
-						callback["msg"] = "failed insert data"
+						callback["msg"] = "gagal insert data"
 					}
 				} else {
 					callback["success"] = false
-					callback["msg"] = "invalid username or password"
+					callback["msg"] = "username atau password salah"
 				}
 			} else {
 				callback["success"] = false
-				callback["msg"] = "invalid username or password"
+				callback["msg"] = "username atau password salah"
 			}
 			context.JSON(200, callback)
 		})
@@ -123,85 +122,112 @@ func AuthRoute(router *gin.Engine) {
 
 			token := context.PostForm("token")
 
-			fmt.Println(token)
-
 			sql := "SELECT token FROM auths WHERE token=?"
 			var result map[string]interface{}
 			db_select := db_core.Raw(sql, token).Scan(&result)
 
-			// fmt.Println(result)
-
-			if db_select.Error == nil {
+			if db_select.Error == nil && result["token"] == token {
 				callback["success"] = true
 				callback["msg"] = "token valid"
-				callback["access_token"] = result
+				callback["access_token"] = result["token"]
 			} else {
 				callback["success"] = false
-				callback["msg"] = "invalid token"
+				callback["msg"] = "token tidak valid"
 			}
 			context.JSON(200, callback)
 		})
 
-		// group.POST("/refresh-token", func(context *gin.Context) {
-		// 	db_core := context.MustGet("db_core").(*gorm.DB)
-		// 	var callback = gin.H{}
+		group.POST("/refresh-token", func(context *gin.Context) {
+			db_core := context.MustGet("db_core").(*gorm.DB)
+			var callback = gin.H{}
 
-		// 	tokenValid := context.PostForm("token")
-		// 	// password := context.PostForm("password")
+			var user models.User
 
-		// 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-		// 		"sub": user.ID,
-		// 		"exp": time.Now().Add(time.Hour * 24 * 30).Unix(),
-		// 	})
+			tokenValid := context.PostForm("token")
 
-		// 	accessToken, err := token.SignedString([]byte(os.Getenv("ACCESS_TOKEN_KEY")))
-		// 	if err != nil {
-		// 		context.JSON(500, gin.H{
-		// 			"message": "failed to created token",
-		// 		})
-		// 		return
-		// 	}
+			sql := "SELECT token FROM auths WHERE token=?"
+			var result map[string]interface{}
+			db_select := db_core.Raw(sql, tokenValid).Scan(&result)
 
-		// 	token = jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-		// 		"sub": user.ID,
-		// 		"exp": time.Now().Add(time.Hour * 24 * 30).Unix(),
-		// 	})
+			token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
+				"sub": user.ID,
+				"exp": time.Now().Add(time.Hour * 24 * 30).Unix(),
+			})
 
-		// 	refreshToken, err := token.SignedString([]byte(os.Getenv("REFRESH_TOKEN_KEY")))
-		// 	if err != nil {
-		// 		context.JSON(500, gin.H{
-		// 			"message": "failed to created token",
-		// 		})
-		// 		return
-		// 	}
+			accessToken, err := token.SignedString([]byte(os.Getenv("ACCESS_TOKEN_KEY")))
+			if err != nil {
+				context.JSON(500, gin.H{
+					"message": "gagal generate token",
+				})
+				return
+			}
 
-		// 	insertToken := models.Auth{
-		// 		Token: refreshToken,
-		// 	}
+			token = jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
+				"sub": user.ID,
+				"exp": time.Now().Add(time.Hour * 24 * 30).Unix(),
+			})
 
-		// 	dbinsert := db_core.Table("auths").Create(&insertToken)
+			refreshToken, err := token.SignedString([]byte(os.Getenv("REFRESH_TOKEN_KEY")))
+			if err != nil {
+				context.JSON(500, gin.H{
+					"message": "gagal generate token",
+				})
+				return
+			}
 
-		// 	if db_select.Error == nil {
-		// 		if compare == nil {
-		// 			if dbinsert.Error == nil {
-		// 				callback["success"] = true
-		// 				callback["msg"] = "login succes"
-		// 				callback["access_token"] = accessToken
-		// 				callback["refresh_token"] = refreshToken
-		// 				callback["user"] = token.Claims
-		// 			} else {
-		// 				callback["success"] = false
-		// 				callback["msg"] = "failed insert data"
-		// 			}
-		// 		} else {
-		// 			callback["success"] = false
-		// 			callback["msg"] = "invalid username or password"
-		// 		}
-		// 	} else {
-		// 		callback["success"] = false
-		// 		callback["msg"] = "invalid username or password"
-		// 	}
-		// 	context.JSON(200, callback)
-		// })
+			insertToken := models.Auth{
+				Token: refreshToken,
+			}
+
+			db_insert := db_core.Table("auths").Create(&insertToken)
+
+			sql2 := "DELETE FROM auths WHERE token=?"
+			db_core.Exec(sql2, tokenValid)
+
+			if db_select.Error == nil && result["token"] == tokenValid {
+				if db_insert.Error == nil {
+					callback["success"] = true
+					callback["msg"] = "berhasil memperbarui token"
+					callback["access_token"] = accessToken
+					callback["refresh_token"] = refreshToken
+					callback["user"] = token.Claims
+				} else {
+					callback["success"] = false
+					callback["msg"] = "gagal memperbarui token"
+				}
+			} else {
+				callback["success"] = false
+				callback["msg"] = "token tidak valid"
+			}
+			context.JSON(200, callback)
+		})
+
+		group.POST("/delete-token", func(context *gin.Context) {
+			db_core := context.MustGet("db_core").(*gorm.DB)
+			var callback = gin.H{}
+
+			token := context.PostForm("token")
+
+			sql := "SELECT token FROM auths WHERE token=?"
+			var resultSelect map[string]interface{}
+			db_select := db_core.Raw(sql, token).Scan(&resultSelect)
+
+			sql2 := "DELETE FROM auths WHERE token=?"
+			db_delete := db_core.Exec(sql2, token)
+
+			if db_select.Error == nil && resultSelect["token"] == token {
+				if db_delete.Error == nil {
+					callback["success"] = true
+					callback["msg"] = "token berhasil dihapus"
+				} else {
+					callback["success"] = false
+					callback["msg"] = "gagal menghapus token"
+				}
+			} else {
+				callback["success"] = false
+				callback["msg"] = "token tidak valid"
+			}
+			context.JSON(200, callback)
+		})
 	}
 }

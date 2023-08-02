@@ -6,12 +6,12 @@ import { MessageService } from 'primeng/api';
 import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: 'app-login2',
-  templateUrl: './login2.component.html',
-  styleUrls: ['./login2.component.scss'],
+  selector: 'app-register',
+  templateUrl: './register.component.html',
+  styleUrls: ['./register.component.scss'],
   providers: [MessageService]
 })
-export class Login2Component {
+export class RegisterComponent {
   public Form: any;
 
   constructor(
@@ -26,19 +26,17 @@ export class Login2Component {
     })
   }
 
-  onLogin(){
+  onRegister(){
     let formData: FormData = new FormData()
     formData.append('username', this.Form.get('username').value);
     formData.append('password', this.Form.get('password').value);
 
-    this.http.post(environment.apiUrl + 'api/auth/login', formData).subscribe(
+    this.http.post(environment.apiUrl + 'api/auth/signup', formData).subscribe(
       callback => {
         let response = <any>callback;
         if (response.success == true) {
           this.messageSrv.add({ severity: 'success', summary: 'Berhasil', detail: response.msg });
-          localStorage.setItem("access_token", response.access_token);
-          localStorage.setItem("refresh_token", response.refresh_token);
-          this.router.navigate(['/'])
+          this.router.navigate(['/login'])
         } else {
           this.messageSrv.add({ severity: 'error', summary: 'Error', detail: response.msg });
         }

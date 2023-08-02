@@ -214,8 +214,8 @@ export class PersonaliaDetailComponent {
     formData.append('id', this.Form.get('id').value);
     formData.append('title', this.Form.get('title').value);
     formData.append('price', this.Form.get('price').value);
-    formData.append('category', this.Form.get('category').value);
     formData.append('description', this.Form.get('description').value);
+    formData.append('category', this.Form.get('category').value);
     formData.append('image', this.Form.get('image').value);
     // formData.append('idstruktur', this.Form.get('idstruktur').value);
     // formData.append('jabatan', this.Form.get('jabatan').value);
