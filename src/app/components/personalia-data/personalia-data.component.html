@@ -5,13 +5,15 @@
     <div class="table-action">
         <p-button label="Tambah" icon="pi pi-user-plus" styleClass="btn-myprimary"
             (onClick)="onOpenAddDialog()"></p-button>
+        
+        <p-button label="Ekspor" icon="pi pi-user-plus" styleClass="btn-myprimary ml-2" (click)="onExport()"></p-button>
 
         <div class="p-inputgroup w-10rem table-search">
-            <input type="text" pInputText placeholder="Cari" class="p-inputtext-sm" />
+            <input type="text" pInputText placeholder="Cari" class="p-inputtext-sm" (input)="onInputChange($event)"/>
             <button type="button" pButton icon="pi pi-search" class="btn-myprimary"></button>
         </div>
 
-        <p-toggleButton [(ngModel)]="isFilter" onIcon="pi pi-filter-slash" offIcon="pi pi-filter"
+        <p-toggleButton [(ngModel)]="isFilter" onIcon="pi-filter-slash" offIcon="pi pi-filter"
             class="filter-toggle"></p-toggleButton>
 
         <div class="filter" *ngIf="isFilter">
@@ -22,7 +24,7 @@
     </div>
     <br>
     <br>
-    <p-table [value]="dataList" styleClass="p-datatable-gridlines p-datatable-sm table-grid-myprimary">
+    <p-table #dt1 [value]="dataList" styleClass="p-datatable-gridlines p-datatable-sm table-grid-myprimary" [globalFilterFields]="['title', 'brand', 'category', 'description']">
         <ng-template pTemplate="header">
             <tr>
                 <th>NO</th>
@@ -39,8 +41,7 @@
             <tr>
                 <td>{{rowIndex+1}}</td>
                 <td>
-                    <p-button icon="pi pi-folder-open" pTooltip="Detail" [routerLink]="['../detail',1]"
-                        styleClass="p-button-rounded p-button-text"></p-button>
+                    <p-button icon="pi pi-folder-open" pTooltip="Detail" [routerLink]="['../detail',data.id]" styleClass="p-button-rounded p-button-text"></p-button>
                     <p-button icon="pi pi-list" pTooltip="Detail Foto" styleClass="p-button-rounded p-button-text"
                         (click)="onFotoDialog()"></p-button>
                     <p-button icon="pi pi-trash" pTooltip="Hapus Data"
@@ -49,19 +50,21 @@
                     <p-button icon="pi pi-bell" pTooltip="Alert Data" styleClass="p-button-rounded p-button-text"
                         (click)="onAlertInfo()"></p-button>
                 </td>
-                <td>{{ data.personalia }}</td>
-                <td>{{ data.nip }}</td>
-                <td>{{ data.struktur }}</td>
+                <td>{{ data.title }}</td>
+                <td>${{ data.price }}</td>
+                <td>{{ data.category }}</td>
                 <td>Staff</td>
-                <td>{{ data.hp }}</td>
-                <td>{{ data.email }}</td>
+                <td>{{ data.description }}</td>
+                <td>
+                    <p-image src="../../../assets/imgs/{{data.image}}" alt="Image" width="40"></p-image>
+                </td>
             </tr>
         </ng-template>
     </p-table>
 
     <p-paginator [rows]="rows" [showCurrentPageReport]="true"
         currentPageReportTemplate="Menampilkan {first} - {last} dari {{length}} data" [totalRecords]="length"
-        [rowsPerPageOptions]="[20,50,100,200]" (onPageChange)="onPageChange($event)"></p-paginator>
+        [rowsPerPageOptions]="[10,25,50,100]" (onPageChange)="onPageChange($event)"></p-paginator>
 </p-card>
 
 <p-confirmDialog header="Konfirmasi" icon="pi pi-exclamation-triangle"></p-confirmDialog>

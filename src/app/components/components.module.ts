@@ -22,6 +22,7 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { MessageService } from 'primeng/api';
 import { CalendarModule } from 'primeng/calendar';
+import { ImageModule } from 'primeng/image';
 
 import { ComponentsRoutingModule } from './components-routing.module';
 import { TableComponent } from './table/table.component';
@@ -71,7 +72,8 @@ import { PersonaliaDetailDokumenComponent } from './personalia-detail-dokumen/pe
     DialogModule,
     CheckboxModule,
     ProgressBarModule,
-    CalendarModule
+    CalendarModule,
+    ImageModule
   ],
   providers: [
     MessageService

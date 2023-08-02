@@ -2,9 +2,9 @@ package main
 
 import (
 	"apigo/config"
+	"apigo/lib/db"
 	"apigo/lib/middleware"
 	"apigo/routes"
-	"fmt"
 	"os"
 
 	"github.com/gin-gonic/gin"
@@ -15,9 +15,23 @@ func init() {
 }
 
 func main() {
-	fmt.Println("GO Feryxz ...")
 	r := gin.Default()
+
 	r.Use(middleware.CORSMiddleware())
+
+	db_core, err := db.DBCore()
+	if err != nil {
+		panic(err)
+	}
+
+	DBCore, _ := db_core.DB()
+	defer DBCore.Close()
+
+	r.Use(func(c *gin.Context) {
+		c.Set("db_core", db_core)
+		c.Next()
+	})
+
 	routes.RouterController(r)
 
 	r.Run(config.GetPort())

@@ -41,7 +41,17 @@ export class PersonaliaAddModalComponent {
     },
   ];
 
-  loading = false
+  loading = false;
+
+  public img_file: any = 'assets/images/not-found.png'
+  public img_file_name: string = ''
+
+  public any_file: any;
+  public any_file_name: string = '';
+
+  // loading file
+  public uploadProgress: any;
+  public uploadProgressPercent: any = 0;
 
   constructor(
     private router: Router,
@@ -61,15 +71,15 @@ export class PersonaliaAddModalComponent {
     this.getStruktur();
 
     this.Form = this.formBuilder.group({
-      personalia: ['', [Validators.required]],
-      nip: ['', [Validators.required]],
-      jenkel: ['L', [Validators.required]],
-      hp: ['', [Validators.required]],
-      email: ['', [Validators.required]],
-      idstruktur: ['', [Validators.required]],
-      jabatan: ['1', [Validators.required]],
-      password: ['', [Validators.required]],
-      tipe: ['email', [Validators.required]],
+      title: ['', [Validators.required]],
+      price: ['', [Validators.required]],
+      category: ['', [Validators.required]],
+      description: ['', [Validators.required]],
+      image: ['', [Validators.required]],
+      // idstruktur: ['', [Validators.required]],
+      // jabatan: ['1', [Validators.required]],
+      // password: ['', [Validators.required]],
+      // tipe: ['email', [Validators.required]],
     })
   }
 
@@ -85,7 +95,7 @@ export class PersonaliaAddModalComponent {
     // Data = Data.append('requestid', requestid);
     // Data = Data.append('requestkey', requestkey);
 
-    this.http.get(environment.apiUrl + 'personalia/personalia/get-struktur', { headers: Header, params: Data }).subscribe(
+    this.http.get(environment.apiUrl + 'api/products/get', { headers: Header, params: Data }).subscribe(
 
       callback => {
         let response = <any>callback;
@@ -107,6 +117,60 @@ export class PersonaliaAddModalComponent {
     );//subscribe
   }
 
+  onImgHandled(event: any) {
+    if (event.target.files && event.target.files[0]) {
+      let mimeType = event.target.files[0].type;
+      if (mimeType.match(/image\/*/) == null) {
+        alert('Only image supported')
+        return
+      }
+      let reader = new FileReader();
+      reader.readAsDataURL(event.target.files.item(0));
+      reader.onload = () => {
+        this.img_file = reader.result;
+        this.img_file_name = event.target.files[0].name;
+        this.Form.get('image').setValue(event.target.files[0]);
+      }
+    }
+  }
+
+  onImgDragOver(event: any) {
+    event.preventDefault();
+  }
+
+  onImgDropped(event: any) {
+    event.preventDefault();
+    const files = event.dataTransfer.files;
+    let reader = new FileReader();
+    reader.readAsDataURL(files[0]);
+    reader.onload = () => {
+      this.img_file = reader.result;
+      this.img_file_name = files[0].name;
+    }
+  }
+
+  onFileHandled(event: any) {
+    if (event.target.files && event.target.files[0]) {
+      let mimeType = event.target.files[0].type;
+      // if (mimeType.match(/image\/*/) == null) {
+      //   alert('File not supported')
+      //   return
+      // }
+      this.any_file = event.target.files.item(0);
+      this.any_file_name = event.target.files[0].name;
+    }
+  }
+
+  onFileDragOver(event: any) {
+    event.preventDefault();
+  }
+
+  onFileDropped(event: any) {
+    event.preventDefault();
+    this.any_file = event.dataTransfer.files[0];
+    this.any_file_name = event.dataTransfer.files[0].name;
+  }
+
   onSave() {
 
     this.loading = true;
@@ -119,21 +183,28 @@ export class PersonaliaAddModalComponent {
     // formData.append('requestid', requestid);
     // formData.append('requestkey', requestkey);
 
-    formData.append('personalia', this.Form.get('personalia').value);
-    formData.append('nip', this.Form.get('nip').value);
-    formData.append('jenkel', this.Form.get('jenkel').value);
-    formData.append('hp', this.Form.get('hp').value);
-    formData.append('email', this.Form.get('email').value);
-    formData.append('idstruktur', this.Form.get('idstruktur').value);
-    formData.append('jabatan', this.Form.get('jabatan').value);
+    formData.append('title', this.Form.get('title').value);
+    formData.append('price', this.Form.get('price').value);
+    formData.append('category', this.Form.get('category').value);
+    formData.append('description', this.Form.get('description').value);
+    // formData.append('image', this.img_file);
+    formData.append('image', this.Form.get('image').value);
+
+
+    console.log(formData.append('description', this.Form.get('description').value));
+    console.log(formData.append('image', this.img_file_name));
+    // console.log(this.img_file);
+    console.log(typeof(this.img_file_name));
+    // console.log(formData.append('image', this.Form.get('image').value));
+    // formData.append('idstruktur', this.Form.get('idstruktur').value);
+    // formData.append('jabatan', this.Form.get('jabatan').value);
     // formData.append('password', this.aes.SHA512(this.Form.get('password').value));
-    formData.append('tipe', this.Form.get('tipe').value);
+    // formData.append('tipe', this.Form.get('tipe').value);
 
-    this.http.post(environment.apiUrl + 'personalia/personalia/add', formData, Header).subscribe(
+    this.http.post(environment.apiUrl + 'api/products/post', formData, Header).subscribe(
       callback => {
-
         let response = <any>callback;
-        if (response.success) {
+        if (response.success == true) {
 
           this.messageSrv.add({ severity: 'success', summary: 'Berhasil', detail: response.msg });
           this.onClose();

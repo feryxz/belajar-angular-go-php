@@ -1,19 +1,14 @@
-package db
+package main
 
 import (
+	"apigo/models"
 	"fmt"
 	"os"
 
-	_ "github.com/go-sql-driver/mysql"
 	"github.com/joho/godotenv"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
-
-type Database struct {
-	DBCore *gorm.DB
-	DBZis  *gorm.DB
-}
 
 type DBSetting struct {
 	Host     string
@@ -24,7 +19,14 @@ type DBSetting struct {
 	Charset  string
 }
 
+type Database struct {
+	DBCore *gorm.DB
+	DBZis  *gorm.DB
+}
+
 func DBCore() (*gorm.DB, error) {
+	var err error
+
 	env := godotenv.Load(".env")
 	if env != nil {
 		fmt.Println("environment variables error")
@@ -56,5 +58,13 @@ func DBCore() (*gorm.DB, error) {
 
 	fmt.Println("database connect")
 
+	db.AutoMigrate(&models.Product{}, models.User{})
+
+	fmt.Println("Migrations success!")
+
 	return db, nil
+}
+
+func main() {
+	DBCore()
 }

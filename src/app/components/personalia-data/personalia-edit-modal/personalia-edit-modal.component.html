@@ -1,6 +1,6 @@
 <div style="display: flex; align-items: center; margin: 10px;">
     <div style="width: 100%;">
-        <h2 class="m-0">Tambah Data</h2>
+        <h2 class="m-0">Update Data</h2>
     </div>
     <div>
         <button pButton class="p-button-text close-btn" type="button" icon="pi pi-times" iconPos="left"
@@ -11,10 +11,28 @@
 <p-scrollPanel [style]="{width: '100%', height: '400px'}" styleClass="custombar1">
     <div style="margin-bottom: 20px;">
         <div>
-            <span>Nama <span style="color: red;">*</span></span>
+            <span>Title <span style="color: red;">*</span></span>
         </div>
         <span class="w-full">
-            <input class="w-full" type="text" pInputText [formControl]="Form.controls['personalia']">
+            <input class="w-full" type="text" pInputText [formControl]="Form.controls['title']">
+        </span>
+    </div>
+
+    <div style="margin-bottom: 20px;">
+        <div>
+            <span>Price <span style="color: red;">*</span></span>
+        </div>
+        <span class="w-full">
+            <input class="w-full" type="text" pInputText [formControl]="Form.controls['price']">
+        </span>
+    </div>
+
+    <div style="margin-bottom: 20px;">
+        <div>
+            <span>Title <span style="color: red;">*</span></span>
+        </div>
+        <span class="w-full">
+            <input class="w-full" type="text" pInputText [formControl]="Form.controls['title']">
         </span>
     </div>
 

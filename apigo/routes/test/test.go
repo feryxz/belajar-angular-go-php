@@ -4,12 +4,17 @@ import (
 
 	// "apigo/lib/mainlib"
 
+	"apigo/models"
+	"fmt"
+	"strconv"
+
 	"github.com/gin-gonic/gin"
+	gonanoid "github.com/matoous/go-nanoid/v2"
 	"gorm.io/gorm"
 )
 
 func TestRoute(router *gin.Engine) {
-	group := router.Group("/test/test")
+	group := router.Group("/test")
 	{
 		group.GET("/get", func(context *gin.Context) {
 			db_core := context.MustGet("db_core").(*gorm.DB)
@@ -17,12 +22,24 @@ func TestRoute(router *gin.Engine) {
 			var callback = gin.H{}
 			status := 200
 
-			sql := "SELECT * FROM user LEFT JOIN alamat ON (user.id=alamat.id)"
+			page, _ := strconv.Atoi(context.DefaultQuery("page", "1"))
+			pageSize, _ := strconv.Atoi(context.DefaultQuery("page_size", "10"))
+
+			offset := (page - 1) * pageSize
+
+			sql := fmt.Sprintf("SELECT * FROM products LIMIT %d OFFSET %d", pageSize, offset)
 			result := []map[string]interface{}{}
 			db_core.Raw(sql).Scan(&result)
 
+			var totalData int64
+			db_core.Table("products").Count(&totalData)
+
 			callback["success"] = true
 			callback["data"] = result
+			callback["length"] = len(result)
+			callback["page"] = page
+			callback["size"] = pageSize
+			callback["total_data"] = totalData
 
 			context.JSON(status, callback)
 		})
@@ -35,19 +52,22 @@ func TestRoute(router *gin.Engine) {
 			email := context.PostForm("email")
 			umur := context.PostForm("umur")
 
-			type User struct {
-				Id    int `gorm:"primaryKey"` // returm lastinsertID
-				Nama  string
-				Email string
-				Umur  string
-			}
+			// type User struct {
+			// 	Id    int `gorm:"primaryKey"` // returm lastinsertID
+			// 	Nama  string
+			// 	Email string
+			// 	Umur  string
+			// }
 
-			insertUser := User{
+			id, _ := gonanoid.New(16)
+
+			insertUser := models.User{
+				ID:    "user" + "-" + id,
 				Nama:  nama,
 				Email: email,
 				Umur:  umur,
 			}
-			dbinsert := db_core.Table("user").Create(&insertUser)
+			dbinsert := db_core.Table("users").Create(&insertUser)
 
 			if dbinsert.Error == nil {
 				callback["success"] = true
