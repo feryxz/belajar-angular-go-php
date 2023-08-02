@@ -38,6 +38,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { LayoutComponent } from './admin/layout/layout.component';
 import { SidemenuComponent } from './admin/sidemenu/sidemenu.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { Login2Component } from './login2/login2.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     UserAddDialog,
     LayoutComponent,
     SidemenuComponent,
-    DashboardComponent
+    DashboardComponent,
+    Login2Component
   ],
   imports: [
     BrowserModule,
