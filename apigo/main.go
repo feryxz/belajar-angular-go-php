@@ -17,8 +17,6 @@ func init() {
 func main() {
 	r := gin.Default()
 
-	r.Use(middleware.CORSMiddleware())
-
 	db_core, err := db.DBCore()
 	if err != nil {
 		panic(err)
@@ -31,7 +29,7 @@ func main() {
 		c.Set("db_core", db_core)
 		c.Next()
 	})
-
+	r.Use(middleware.CORSMiddleware())
 	routes.RouterController(r)
 
 	r.Run(config.GetPort())
