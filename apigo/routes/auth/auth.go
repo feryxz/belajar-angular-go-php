@@ -2,6 +2,7 @@ package auth
 
 import (
 	"apigo/models"
+	"errors"
 	"os"
 	"time"
 
@@ -11,6 +12,22 @@ import (
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 )
+
+type RefreshTokenClaims struct {
+	Exp int    `json:"exp"`
+	Sub string `json:"sub"`
+}
+
+func (c *RefreshTokenClaims) Valid() error {
+	if time.Unix(int64(c.Exp), 0).Before(time.Now()) {
+		return errors.New("token kadaluwarsa")
+	}
+
+	if c.Sub == "" {
+		return errors.New("sub kosong")
+	}
+	return nil
+}
 
 func AuthRoute(router *gin.Engine) {
 	group := router.Group("/api/auth")
@@ -22,10 +39,7 @@ func AuthRoute(router *gin.Engine) {
 			username := context.PostForm("username")
 			password := context.PostForm("password")
 
-			hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
-			if err != nil {
-				panic(err)
-			}
+			hashedPassword, _ := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 
 			id, _ := gonanoid.New(16)
 
@@ -130,6 +144,40 @@ func AuthRoute(router *gin.Engine) {
 				callback["success"] = true
 				callback["msg"] = "token valid"
 				callback["access_token"] = result["token"]
+			} else {
+				callback["success"] = false
+				callback["msg"] = "token tidak valid"
+			}
+			context.JSON(200, callback)
+		})
+
+		group.POST("/get-user", func(context *gin.Context) {
+			db_core := context.MustGet("db_core").(*gorm.DB)
+			var callback = gin.H{}
+
+			tokenValid := context.PostForm("token")
+
+			sql := "SELECT token FROM auths WHERE token=?"
+			var result map[string]interface{}
+			db_select := db_core.Raw(sql, tokenValid).Scan(&result)
+
+			token, err := jwt.ParseWithClaims(tokenValid, &RefreshTokenClaims{}, func(token *jwt.Token) (interface{}, error) {
+				return []byte(os.Getenv("REFRESH_TOKEN_KEY")), nil
+			})
+			if err != nil {
+				callback["msg"] = "gagal decode token"
+			}
+
+			if claims, ok := token.Claims.(*RefreshTokenClaims); ok && token.Valid {
+				userID := claims.Sub
+				callback["user"] = userID
+			} else {
+				callback["msg"] = "token tidak valid"
+			}
+
+			if db_select.Error == nil && result["token"] == tokenValid {
+				callback["success"] = true
+				callback["msg"] = "token valid"
 			} else {
 				callback["success"] = false
 				callback["msg"] = "token tidak valid"
