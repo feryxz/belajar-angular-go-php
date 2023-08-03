@@ -82,9 +82,7 @@ func AuthRoute(router *gin.Engine) {
 
 			accessToken, err := token.SignedString([]byte(os.Getenv("ACCESS_TOKEN_KEY")))
 			if err != nil {
-				context.JSON(500, gin.H{
-					"msg": "gagal generate token",
-				})
+				callback["msg"] = "gagal generate token"
 				return
 			}
 
@@ -95,9 +93,7 @@ func AuthRoute(router *gin.Engine) {
 
 			refreshToken, err := token.SignedString([]byte(os.Getenv("REFRESH_TOKEN_KEY")))
 			if err != nil {
-				context.JSON(500, gin.H{
-					"msg": "gagal membuat token",
-				})
+				callback["msg"] = "gagal generate token"
 				return
 			}
 
@@ -204,9 +200,7 @@ func AuthRoute(router *gin.Engine) {
 
 			accessToken, err := token.SignedString([]byte(os.Getenv("ACCESS_TOKEN_KEY")))
 			if err != nil {
-				context.JSON(500, gin.H{
-					"message": "gagal generate token",
-				})
+				callback["msg"] = "gagal generate token"
 				return
 			}
 
@@ -217,9 +211,7 @@ func AuthRoute(router *gin.Engine) {
 
 			refreshToken, err := token.SignedString([]byte(os.Getenv("REFRESH_TOKEN_KEY")))
 			if err != nil {
-				context.JSON(500, gin.H{
-					"message": "gagal generate token",
-				})
+				callback["msg"] = "gagal generate token"
 				return
 			}
 
