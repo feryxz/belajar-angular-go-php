@@ -1,7 +1,7 @@
 <div class="container">
     <div class="login">
         <img src="assets/imgs/angular-logo.png">
-        <h2>LOGIN</h2>
+        <h2>REGISTER</h2>
         <div class="p-inputgroup">
             <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
             <input type="text" pInputText placeholder="Username" [formControl]="Form.controls['username']">         
@@ -11,10 +11,10 @@
             <input type="password" pInputText placeholder="Password" [formControl]="Form.controls['password']">         
         </div>
 
-        <button type="button" (click)="onLogin()">Login</button>
+        <button type="button" (click)="onRegister()">Register</button>
         <!-- <button pButton pRipple type="button" label="Login" class="p-button-rounded p-button-secondary" (click)="onLogin()"></button> -->
 
-        <p><a routerLink="/register">Registration</a></p>
+        <p><a routerLink="/login">Login</a></p>
     </div>
 </div>
 

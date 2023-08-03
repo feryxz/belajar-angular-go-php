@@ -39,6 +39,8 @@ import { LayoutComponent } from './admin/layout/layout.component';
 import { SidemenuComponent } from './admin/sidemenu/sidemenu.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { Login2Component } from './login2/login2.component';
+import { ToastModule } from 'primeng/toast';
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +51,8 @@ import { Login2Component } from './login2/login2.component';
     LayoutComponent,
     SidemenuComponent,
     DashboardComponent,
-    Login2Component
+    Login2Component,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
@@ -85,7 +88,8 @@ import { Login2Component } from './login2/login2.component';
     ReactiveFormsModule,
     HttpClientModule,
     PasswordModule,
-    InputMaskModule
+    InputMaskModule,
+    ToastModule
   ],
   providers: [],
   bootstrap: [AppComponent]

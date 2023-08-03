@@ -1,8 +1,8 @@
 package routes
 
 import (
+	auth "apigo/routes/auth"
 	product "apigo/routes/products"
-	"apigo/routes/test"
 
 	"github.com/gin-gonic/gin"
 )
@@ -10,7 +10,8 @@ import (
 func RouterController(router *gin.Engine) {
 
 	//Contoh
-	test.TestRoute(router)
+	// test.TestRoute(router)
 	product.ProductRoute(router)
+	auth.AuthRoute(router)
 
 }

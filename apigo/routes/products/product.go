@@ -181,7 +181,14 @@ func ProductRoute(router *gin.Engine) {
 			price := context.PostForm("price")
 			category := context.PostForm("category")
 			description := context.PostForm("description")
-			image := context.PostForm("image")
+			// image := context.PostForm("image")
+			image, _ := context.FormFile("image")
+
+			filename := filepath.Base(image.Filename)
+			if err := context.SaveUploadedFile(image, "../src/assets/imgs/"+filename); err != nil {
+				context.String(http.StatusBadRequest, "upload file err: %s", err.Error())
+				return
+			}
 
 			updateUser := models.Product{
 				ID:          id,
@@ -189,7 +196,7 @@ func ProductRoute(router *gin.Engine) {
 				Price:       price,
 				Description: category,
 				Category:    description,
-				Image:       image,
+				Image:       filename,
 			}
 
 			sql := "SELECT * FROM products where id=?"
